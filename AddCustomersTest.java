@@ -1,3 +1,7 @@
+import static org.junit.Assert.assertEquals;
+
+import java.util.Random;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -53,54 +57,67 @@ public class AddCustomersTest {
 	@DisplayName("Check results on entering a valid information for all fields")
 	public void tc004() throws InterruptedException {
 		
-		//=====Test Data======================
-		String customerName = "Adam";
-		String gender = "male";
-		String dateOfbirth = "01/01/1991";
-		String address = "47 Testing Road";
-		String city = "Dublin";
-		String state = "Dublin";
-		Integer pin = 123456;
-		String mobileNumber = "123456";
-		String email = "cnmc1234@guru99.com";
-		String customerPassword = "1234567";
-		//====================================
 		
 		//click on New Customer
 		//driver.findElement(By.linkText("New Customer")).click();
 		driver.get("https://demo.guru99.com/v4/manager/addcustomerpage.php");
 		
 		//Enter Customer Name
-		driver.findElement(By.name("name")).sendKeys(customerName);
+		driver.findElement(By.name("name")).sendKeys(TestData.customerName);
+		
+		if(TestData.gender.equals("male")) {
+			driver.findElement(By.cssSelector("body > table > tbody > tr > td > table > tbody > tr:nth-child(5) > td:nth-child(2) > input[type=radio]:nth-child(1)")).click();
+			
+		} else if(TestData.gender.equals("female")) {
+			driver.findElement(By.cssSelector("body > table > tbody > tr > td > table > tbody > tr:nth-child(5) > td:nth-child(2) > input[type=radio]:nth-child(2)")).click();
+		}
 		
 		//Enter DOB
-		driver.findElement(By.id("dob")).sendKeys(dateOfbirth);
+		driver.findElement(By.id("dob")).sendKeys(TestData.dateOfbirth);
 		
 		//Enter address
-		driver.findElement(By.name("addr")).sendKeys(address);
+		driver.findElement(By.name("addr")).sendKeys(TestData.address);
 		
 		//Enter city
-		driver.findElement(By.name("city")).sendKeys(city);
+		driver.findElement(By.name("city")).sendKeys(TestData.city);
 		
 		//Enter state
-		driver.findElement(By.name("state")).sendKeys(state);
+		driver.findElement(By.name("state")).sendKeys(TestData.state);
 		
 		//Enter PIN
-		driver.findElement(By.name("pinno")).sendKeys(pin.toString());
+		driver.findElement(By.name("pinno")).sendKeys(TestData.pin.toString());
 		
 		//Enter Mobile Number
-		driver.findElement(By.name("telephoneno")).sendKeys(mobileNumber);
+		driver.findElement(By.name("telephoneno")).sendKeys(TestData.mobileNumber);
 		
 		//Enter email
-		driver.findElement(By.name("emailid")).sendKeys(email);
+		driver.findElement(By.name("emailid")).sendKeys(TestData.email);
 		
 		//Enter password
-		driver.findElement(By.name("password")).sendKeys(customerPassword);
+		driver.findElement(By.name("password")).sendKeys(TestData.customerPassword);
 		
 		//Click on submit
 		driver.findElement(By.name("sub")).click();
 		
-		//You should validate using asserts if the actual results is the same of the expected results.
+		//Check the message: Customer created successfully 
+		String actualResults = driver.findElement(By.xpath("//*[@id=\"customer\"]/tbody/tr[1]/td/p")).getText();
+		String expectedResults = "Customer Registered Successfully!!!";
+		
+		assertEquals(expectedResults,actualResults);
+		
+		//Check Customer Name
+		actualResults = driver.findElement(By.xpath("/html/body/table/tbody/tr/td/table/tbody/tr[5]/td[2]")).getText();
+		assertEquals(TestData.customerName, actualResults);
+		
+		//Check Gender
+		assertEquals(TestData.gender, driver.findElement(By.cssSelector("#customer > tbody > tr:nth-child(6) > td:nth-child(2)")).getText());
+		
+		//Check DOB
+		assertEquals(TestData.expectedDOB, driver.findElement(By.cssSelector("#customer > tbody > tr:nth-child(7) > td:nth-child(2)")).getText());
+		
+		//CheckEmail
+		assertEquals(TestData.email, driver.findElement(By.xpath("/html/body/table/tbody/tr/td/table/tbody/tr[13]/td[2]")).getText());
+		
 		
 		
 	}
