@@ -9,7 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -28,7 +31,7 @@ public class LoginFunctionalityTest {
 	@AfterAll
 	public static void afterAll() {
 		//driver.close();
-		driver.quit();
+		//driver.quit();
 		
 	}
 	
@@ -70,8 +73,36 @@ public class LoginFunctionalityTest {
 	
 	@Test
 	@DisplayName("Check results on entering Invalid User ID & Password")
-	public void tc002() {
+	public void tc002() throws InterruptedException {
+		//Open the URL
+		driver.get("http://demo.guru99.com/v4");
 		
+		//driver.manage().window().maximize();
+		//Thread.sleep(1000);
+		
+		WebDriverWait wait = new WebDriverWait(null, null);
+		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("save")));
+		element.click();
+		
+		//Closing the Iframe with GDPR Consent
+		//driver.switchTo().frame("gdpr-consent-notice").findElement(By.id("save")).click();
+		//Thread.sleep(1000);
+		
+		//Typing UserID
+		driver.findElement(By.name("uid")).sendKeys("guru99");
+		
+		//Type the Password
+		driver.findElement(By.name("password")).sendKeys("glass99");
+		
+		//Click on the button LOGIN
+		driver.findElement(By.name("btnLogin")).click();
+		
+		String actualText = driver.switchTo().alert().getText();
+		String expectedText = "User or Password is not valid";
+		
+		assertEquals(expectedText, actualText);
+		
+		driver.switchTo().alert().accept();
 		
 	}
 	
