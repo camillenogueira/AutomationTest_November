@@ -25,6 +25,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import pages.HomePage;
+import pages.LoginPages;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("Test Scenario - Login Functionality")
@@ -62,21 +64,21 @@ public class LoginFunctionalityTest {
 		Thread.sleep(2000);
 		
 		//Closing the Iframe with GDPR Consent
-		//TestData.driver.switchTo().frame("gdpr-consent-notice").findElement(By.id("save")).click();
-		//Thread.sleep(2000);
+		TestData.driver.switchTo().frame("gdpr-consent-notice").findElement(By.id("save")).click();
+		Thread.sleep(2000);
 		
 		//Typing UserID
-		TestData.driver.findElement(By.name("uid")).sendKeys("mngr459119");
+		TestData.driver.findElement(LoginPages.usernameID).sendKeys("mngr459119");
 		
 		//Type the Password
-		TestData.driver.findElement(By.name("password")).sendKeys("AqEnubY");
+		TestData.driver.findElement(LoginPages.password).sendKeys("AqEnubY");
 		
 		//Click on the button LOGIN
-		TestData.driver.findElement(By.name("btnLogin")).click();
+		TestData.driver.findElement(LoginPages.loginButton).click();
 		
 		//Check the expected results
 		String expectedResults = "Welcome To Manager's Page of Guru99 Bank";
-		String actualResults = TestData.driver.findElement(By.cssSelector("body > table > tbody > tr > td > table > tbody > tr:nth-child(2) > td > marquee")).getText();
+		String actualResults = TestData.driver.findElement(HomePage.welcomeMessage).getText();
 		
 		//assertTrue will return true or false
 		//assertTrue(actualResults.equals(expectedResults));
@@ -84,6 +86,7 @@ public class LoginFunctionalityTest {
 		
 		//assertEquals will compare two variables
 		assertEquals(expectedResults,actualResults);
+		
 		File shot = ((TakesScreenshot)TestData.driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(shot, new File("/Users/camillenogueira/Downloads/loginTC001.jpg"));
 		
@@ -114,13 +117,13 @@ public class LoginFunctionalityTest {
 		//Thread.sleep(1000);
 		
 		//Typing UserID
-		TestData.driver.findElement(By.name("uid")).sendKeys("guru99");
+		TestData.driver.findElement(LoginPages.usernameID).sendKeys("guru99");
 		
 		//Type the Password
-		TestData.driver.findElement(By.name("password")).sendKeys("glass99");
+		TestData.driver.findElement(LoginPages.password).sendKeys("glass99");
 		
 		//Click on the button LOGIN
-		TestData.driver.findElement(By.name("btnLogin")).click();
+		TestData.driver.findElement(LoginPages.loginButton).click();
 		
 		String actualText = TestData.driver.switchTo().alert().getText();
 		String expectedText = "User or Password is not valid";

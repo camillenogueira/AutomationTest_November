@@ -22,6 +22,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import pages.HomePage;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("Test Scenario - Add Account")
@@ -48,7 +49,7 @@ public class AddAccountTest {
 	public void tc013() throws InterruptedException, IOException {
 		
 		//Click on the Link to add a new Account
-		TestData.driver.findElement(By.linkText("New Account")).click();
+		TestData.driver.findElement(HomePage.letMenuNewAccount).click();
 		//Go directly to the URL
 		TestData.driver.get("https://demo.guru99.com/v4/manager/addAccount.php");
 		

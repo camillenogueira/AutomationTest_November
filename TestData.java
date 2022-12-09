@@ -3,6 +3,8 @@ import java.util.Random;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import pages.LoginPages;
+
 public class TestData {
 
 	//Declaration of the object webdriver
@@ -43,7 +45,7 @@ public class TestData {
 		Thread.sleep(2000);
 		
 		//Enter the userID
-		driver.findElement(By.name("uid")).sendKeys("mngr459119");
+		driver.findElement(LoginPages.usernameID).sendKeys("mngr459119");
 		
 		//Enter the password
 		driver.findElement(By.name("password")).sendKeys("AqEnubY");

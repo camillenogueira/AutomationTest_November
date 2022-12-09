@@ -11,7 +11,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-
+import pages.AddCustomerPage;
+import pages.HomePage;
+import pages.AddCustomerPage;
 public class AddCustomersTest {
 
 	
@@ -35,45 +37,45 @@ public class AddCustomersTest {
 		
 		
 		//click on New Customer
-		//driver.findElement(By.linkText("New Customer")).click();
+		TestData.driver.findElement(HomePage.leftMenuNewCustomer).click();
 		TestData.driver.get("https://demo.guru99.com/v4/manager/addcustomerpage.php");
 		
 		//Enter Customer Name
-		TestData.driver.findElement(By.name("name")).sendKeys(TestData.customerName);
+		TestData.driver.findElement(AddCustomerPage.customerName).sendKeys(TestData.customerName);
 		
 		if(TestData.gender.equals("male")) {
-			TestData.driver.findElement(By.cssSelector("body > table > tbody > tr > td > table > tbody > tr:nth-child(5) > td:nth-child(2) > input[type=radio]:nth-child(1)")).click();
+			TestData.driver.findElement(AddCustomerPage.maleGender).click();
 			
 		} else if(TestData.gender.equals("female")) {
-			TestData.driver.findElement(By.cssSelector("body > table > tbody > tr > td > table > tbody > tr:nth-child(5) > td:nth-child(2) > input[type=radio]:nth-child(2)")).click();
+			TestData.driver.findElement(AddCustomerPage.femaleGender).click();
 		}
 		
 		//Enter DOB
-		TestData.driver.findElement(By.id("dob")).sendKeys(TestData.dateOfbirth);
+		TestData.driver.findElement(AddCustomerPage.dateOfBirth).sendKeys(TestData.dateOfbirth);
 		
 		//Enter address
-		TestData.driver.findElement(By.name("addr")).sendKeys(TestData.address);
+		TestData.driver.findElement(AddCustomerPage.address).sendKeys(TestData.address);
 		
 		//Enter city
-		TestData.driver.findElement(By.name("city")).sendKeys(TestData.city);
+		TestData.driver.findElement(AddCustomerPage.city).sendKeys(TestData.city);
 		
 		//Enter state
-		TestData.driver.findElement(By.name("state")).sendKeys(TestData.state);
+		TestData.driver.findElement(AddCustomerPage.state).sendKeys(TestData.state);
 		
 		//Enter PIN
-		TestData.driver.findElement(By.name("pinno")).sendKeys(TestData.pin.toString());
+		TestData.driver.findElement(AddCustomerPage.pinNumber).sendKeys(TestData.pin.toString());
 		
 		//Enter Mobile Number
-		TestData.driver.findElement(By.name("telephoneno")).sendKeys(TestData.mobileNumber);
+		TestData.driver.findElement(AddCustomerPage.mobileNumber).sendKeys(TestData.mobileNumber);
 		
 		//Enter email
-		TestData.driver.findElement(By.name("emailid")).sendKeys(TestData.email);
+		TestData.driver.findElement(AddCustomerPage.email).sendKeys(TestData.email);
 		
 		//Enter password
-		TestData.driver.findElement(By.name("password")).sendKeys(TestData.customerPassword);
+		TestData.driver.findElement(AddCustomerPage.password).sendKeys(TestData.customerPassword);
 		
 		//Click on submit
-		TestData.driver.findElement(By.name("sub")).click();
+		TestData.driver.findElement(AddCustomerPage.submitButton).click();
 		
 		//Check the message: Customer created successfully 
 		String actualResults = TestData.driver.findElement(By.xpath("//*[@id=\"customer\"]/tbody/tr[1]/td/p")).getText();
@@ -97,7 +99,6 @@ public class AddCustomersTest {
 		
 		//CheckEmail
 		assertEquals(TestData.email, TestData.driver.findElement(By.xpath("/html/body/table/tbody/tr/td/table/tbody/tr[13]/td[2]")).getText());
-		
 		
 		
 	}
